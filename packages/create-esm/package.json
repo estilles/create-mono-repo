@@ -1,0 +1,45 @@
+{
+  "name": "@estilles/create-esm",
+  "version": "1.0.0",
+  "description": "Initialize a Node/ESM repository",
+  "main": "./dist/index.js",
+  "bin": {
+    "create-esm": "dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .js,.ts",
+    "build": "tsc",
+    "start": "tsc && node dist/index.js",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+  },
+  "author": "Johnny Estilles",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/node": "^20.11.0",
+    "enquirer": "^2.4.1",
+    "ora": "^8.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/estilles/create-mono-repo.git"
+  },
+  "keywords": [],
+  "license": "ISC"
+}

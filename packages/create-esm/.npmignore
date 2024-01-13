@@ -1,0 +1,7 @@
+src
+.eslintrc.json
+.gitignore
+.npmigmore
+.npmrc
+.prettierrc.json
+tsconfig.json
