@@ -4,6 +4,8 @@ export type JestConfig = {
   roots: string[]
   testMatch: string[]
   transform: object
+  moduleNameMapper: object
+  extensionsToTreatAsEsm: string[]
 }
 
 export const JestDefaultConfig: JestConfig = {
@@ -15,6 +17,10 @@ export const JestDefaultConfig: JestConfig = {
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
+  moduleNameMapper: {
+    '(.+)\\.js': '$1',
+  },
+  extensionsToTreatAsEsm: ['.ts'],
 }
 
 export class JestConfigJson extends JSONFile<JestConfig> {
