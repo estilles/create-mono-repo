@@ -408,7 +408,7 @@ export const TsDefaultConfig: TsConfig = {
     emitDecoratorMetadata: true,
     outDir: 'dist',
     baseUrl: '.',
-    types: ['node'],
+    types: ['node', 'jest'],
   },
   exclude: ['node_modules', 'dist'],
   include: ['src/**/*.ts'],
