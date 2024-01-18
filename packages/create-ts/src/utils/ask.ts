@@ -17,7 +17,7 @@ export const askUser = (existingConfigFiles: FileList): AnswerPromise =>
     name: 'continueInstall',
     message:
       existingConfigFiles.length === 0
-        ? 'Initializing ESM package. Do you wish to continue?'
+        ? 'Initializing TypeScript package. Do you wish to continue?'
         : `The following files will be removed: ${existingConfigFiles
             .map((file: string) => basename(file))
             .join(', ')}. Do you wish to continue?`,
