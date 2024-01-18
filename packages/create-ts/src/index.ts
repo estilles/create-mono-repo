@@ -73,6 +73,7 @@ const init = async (): Promise<void> => {
     )
     await packageJson.load()
     packageJson.set({
+      main: './dist/index.js',
       type: 'module',
       scripts: {
         test: 'jest',
@@ -102,9 +103,19 @@ const init = async (): Promise<void> => {
     writeFileSync(resolve(cwd, './.gitignore'), GitIgnoreFileData)
     log.succeed()
 
-    log.start('Creating ./src directory')
-    mkdirSync(resolve(cwd, './src'))
-    log.succeed()
+    const srcDir: string = resolve(cwd, './src')
+    if (!existsSync(srcDir)) {
+      log.start('Creating ./src directory')
+      mkdirSync(srcDir)
+      log.succeed()
+    }
+
+    const srcIndex: string = resolve(cwd, './src/index.ts')
+    if (!existsSync(srcIndex)) {
+      log.start('Creating ./src/index.ts')
+      writeFileSync(srcIndex, '')
+      log.succeed()
+    }
   } catch (error) {
     logError(error.toString())
   }
