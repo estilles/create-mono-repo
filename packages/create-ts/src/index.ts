@@ -7,9 +7,10 @@ import { askUser, Answers } from './utils/ask.js'
 import { getExitsingConfigFiles, FileList, cleanup } from './utils/cleanup.js'
 import { ESLintDefaultConfig, ESLintRC } from './utils/eslint.js'
 import { GitIgnoreFileData } from './utils/gitignore.js'
-import { npmInit, npmInstall, npx } from './utils/npm.js'
+import { npmInit, npmInstall } from './utils/npm.js'
 import { PackageJson } from './utils/package.js'
 import { TsConfigJson, TsDefaultConfig } from './utils/tsconfig.js'
+import { JestConfigJson, JestDefaultConfig } from './utils/jest.js'
 
 const init = async (): Promise<void> => {
   try {
@@ -56,11 +57,14 @@ const init = async (): Promise<void> => {
     await npmInstall('@types/node', { dev: true, cwd })
     await npmInstall('jest', { dev: true, cwd })
     await npmInstall('ts-jest', { dev: true, cwd })
+    await npmInstall('ts-node', { dev: true, cwd })
     await npmInstall('@types/jest', { dev: true, cwd })
     log.succeed()
 
-    log.start('Configuring ts-jest')
-    await npx('ts-jest', ['config:init'], cwd)
+    log.start('Configuring Jest')
+    const jestConfig = JestConfigJson.create(resolve(cwd, './jest.config.json'))
+    jestConfig.set(JestDefaultConfig)
+    await jestConfig.save()
     log.succeed()
 
     log.start('Configuring package for ESM and Jest')
@@ -96,6 +100,10 @@ const init = async (): Promise<void> => {
 
     log.start('Configuring .gitignore')
     writeFileSync(resolve(cwd, './.gitignore'), GitIgnoreFileData)
+    log.succeed()
+
+    log.start('Creating ./src directory')
+    mkdirSync(resolve(cwd, './src'))
     log.succeed()
   } catch (error) {
     logError(error.toString())
