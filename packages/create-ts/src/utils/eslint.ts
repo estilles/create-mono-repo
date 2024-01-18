@@ -134,6 +134,12 @@ export const ESLintDefaultConfig: ESLintConfig = {
         sourceType: 'script',
       },
     },
+    {
+      env: {
+        jest: true,
+      },
+      files: ['tests/**/*', '**/*.(test|spec).ts'],
+    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {

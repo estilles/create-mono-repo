@@ -11,6 +11,7 @@ const filesToCheck: FileList = [
   '.eslintrc.json',
   'node_modules',
   'jest.config.js',
+  'tsconfig.json',
 ]
 
 export const getExitsingConfigFiles = (path: string): FileList =>

@@ -410,7 +410,7 @@ export const TsDefaultConfig: TsConfig = {
     baseUrl: '.',
     types: ['node', 'jest'],
   },
-  exclude: ['node_modules', 'dist'],
+  exclude: ['node_modules', 'dist', 'src/**.test.ts'],
   include: ['src/**/*.ts'],
   compileOnSave: false,
 }
