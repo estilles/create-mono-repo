@@ -7,7 +7,7 @@ import { askUser, Answers } from './utils/ask.js'
 import { getExitsingConfigFiles, FileList, cleanup } from './utils/cleanup.js'
 import { ESLintDefaultConfig, ESLintRC } from './utils/eslint.js'
 import { GitIgnoreFileData } from './utils/gitignore.js'
-import { npmInit, npmInstall } from './utils/npm.js'
+import { npmInit, npmInstall, npx } from './utils/npm.js'
 import { PackageJson } from './utils/package.js'
 import { TsConfigJson, TsDefaultConfig } from './utils/tsconfig.js'
 
@@ -46,24 +46,32 @@ const init = async (): Promise<void> => {
     }
 
     log.start('Initializing package and installing dependencies')
-    npmInit(cwd)
-    npmInstall('eslint', { dev: true, cwd })
-    npmInstall('eslint-config-prettier', { dev: true, cwd })
-    npmInstall('@typescript-eslint/eslint-plugin', { dev: true, cwd })
-    npmInstall('@typescript-eslint/parser', { dev: true, cwd })
-    npmInstall('prettier', { dev: true, cwd })
-    npmInstall('typescript', { dev: true, cwd })
-    npmInstall('@types/node', { dev: true, cwd })
+    await npmInit(cwd)
+    await npmInstall('eslint', { dev: true, cwd })
+    await npmInstall('eslint-config-prettier', { dev: true, cwd })
+    await npmInstall('@typescript-eslint/eslint-plugin', { dev: true, cwd })
+    await npmInstall('@typescript-eslint/parser', { dev: true, cwd })
+    await npmInstall('prettier', { dev: true, cwd })
+    await npmInstall('typescript', { dev: true, cwd })
+    await npmInstall('@types/node', { dev: true, cwd })
+    await npmInstall('jest', { dev: true, cwd })
+    await npmInstall('ts-jest', { dev: true, cwd })
+    await npmInstall('@types/jest', { dev: true, cwd })
+    log.succeed()
+
+    log.start('Configuring ts-jest')
+    await npx('ts-jest', ['config:init'], cwd)
     log.succeed()
 
     log.start('Configuring package for ESM and Jest')
     const packageJson: PackageJson = PackageJson.create(
       resolve(cwd, './package.json'),
     )
-    packageJson.load()
+    await packageJson.load()
     packageJson.set({
       type: 'module',
       scripts: {
+        test: 'jest',
         lint: 'eslint --ext .ts',
         build: 'tsc',
         start: 'tsc && node dist/index.js',
@@ -71,19 +79,19 @@ const init = async (): Promise<void> => {
           'prettier --ignore-path .gitignore --write "**/*.+(js|ts|json)"',
       },
     })
-    packageJson.save()
+    await packageJson.save()
     log.succeed()
 
     log.start('Configuring ESLint')
     const eslintConfig = ESLintRC.create(resolve(cwd, './.eslintrc.json'))
     eslintConfig.set(ESLintDefaultConfig)
-    eslintConfig.save()
+    await eslintConfig.save()
     log.succeed()
 
     log.start('Configuring TSConfig')
     const tsConfig = TsConfigJson.create(resolve(cwd, './tsconfig.json'))
     tsConfig.set(TsDefaultConfig)
-    tsConfig.save()
+    await tsConfig.save()
     log.succeed()
 
     log.start('Configuring .gitignore')

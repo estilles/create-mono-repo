@@ -1,4 +1,5 @@
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFile, writeFile } from 'node:fs'
+import { ResolveCallback, RejectCallback } from 'src/shared/promiseTypes.js'
 
 export type JSONPrimitive = string | number | boolean | null
 
@@ -18,29 +19,39 @@ export class JSONFile<T> {
     this.#path = path
   }
 
-  load(path?: string) {
+  async load(path?: string): Promise<void> {
     if (typeof path !== 'undefined') {
       this.#path = path
     }
 
-    try {
-      const buffer = readFileSync(this.#path)
-      this.#config = JSON.parse(buffer.toString())
-    } catch {
-      throw new Error(`Unable to load ${this.#path}`)
-    }
-
-    return this
+    return new Promise<void>(
+      (resolve: ResolveCallback<void>, reject: RejectCallback) => {
+        readFile(this.#path, (error: NodeJS.ErrnoException, data: Buffer) => {
+          if (error) {
+            return reject(new Error(`Unable to load ${this.#path}`))
+          }
+          this.#config = JSON.parse(data.toString())
+          resolve()
+        })
+      },
+    )
   }
 
-  save() {
-    try {
-      writeFileSync(this.#path, JSON.stringify(this.#config, null, 2))
-    } catch {
-      throw new Error(`Unable to save ${this.#path}`)
-    }
-
-    return this
+  async save(): Promise<void> {
+    return new Promise<void>(
+      (resolve: ResolveCallback<void>, reject: RejectCallback) => {
+        writeFile(
+          this.#path,
+          JSON.stringify(this.#config, null, 2),
+          (error: NodeJS.ErrnoException) => {
+            if (error) {
+              return reject(new Error(`Unable to load ${this.#path}`))
+            }
+            resolve()
+          },
+        )
+      },
+    )
   }
 
   set(data: Partial<T>) {

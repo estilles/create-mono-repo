@@ -2,7 +2,7 @@ import { resolve } from 'node:path'
 import { existsSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 
-export type FileList = Array<string>
+export type FileList = string[]
 
 const filesToCheck: FileList = [
   'package.json',
@@ -10,6 +10,7 @@ const filesToCheck: FileList = [
   '.gitignore',
   '.eslintrc.json',
   'node_modules',
+  'jest.config.js',
 ]
 
 export const getExitsingConfigFiles = (path: string): FileList =>
