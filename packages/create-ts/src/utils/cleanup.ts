@@ -12,6 +12,7 @@ const filesToCheck: FileList = [
   'node_modules',
   'jest.config.js',
   'tsconfig.json',
+  '.vscode',
 ]
 
 export const getExitsingConfigFiles = (path: string): FileList =>

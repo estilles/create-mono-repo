@@ -11,6 +11,7 @@ import { npmInit, npmInstall } from './utils/npm.js'
 import { PackageJson } from './utils/package.js'
 import { TsConfigJson, TsDefaultConfig } from './utils/tsconfig.js'
 import { JestConfigJson, JestDefaultConfig } from './utils/jest.js'
+import { VsCodeConfigJson, VsCodeDefaultConfig } from './utils/vscode.js'
 
 const init = async (): Promise<void> => {
   try {
@@ -101,6 +102,18 @@ const init = async (): Promise<void> => {
 
     log.start('Configuring .gitignore')
     writeFileSync(resolve(cwd, './.gitignore'), GitIgnoreFileData)
+    log.succeed()
+
+    const vscodeDir: string = resolve(cwd, './.vscode')
+    log.start('Configuring VSCode')
+    if (!existsSync(vscodeDir)) {
+      mkdirSync(vscodeDir)
+    }
+    const vscodeConfig = VsCodeConfigJson.create(
+      resolve(cwd, './.vscode/settings.json'),
+    )
+    vscodeConfig.set(VsCodeDefaultConfig)
+    await vscodeConfig.save()
     log.succeed()
 
     const srcDir: string = resolve(cwd, './src')
