@@ -1,6 +1,6 @@
 {
   "name": "@estilles/create-ts",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Initialize a Node/TypeScript repository",
   "main": "./dist/index.js",
   "bin": {
@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .ts",
     "build": "tsc",
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && node dist/src/index.js",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "prepublish": "tsc"
   },
