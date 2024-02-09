@@ -30,6 +30,11 @@ export const VsCodeDefaultConfig = {
   'prettier.semi': false,
   'prettier.singleQuote': true,
   'prettier.trailingComma': 'all',
+  'editor.codeActionsOnSave': {
+    'source.organizeImports': 'always',
+  },
+  'typescript.preferences.importModuleSpecifierEnding': 'js',
+  'npm-intellisense.importLinebreak': '',
 }
 
 export class VsCodeConfigJson extends JSONFile<VsCodeConfig> {
