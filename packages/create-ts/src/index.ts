@@ -3,14 +3,14 @@ import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import { log, logError } from './shared/logger.js'
-import { askUser, Answers } from './utils/ask.js'
-import { getExitsingConfigFiles, FileList, cleanup } from './utils/cleanup.js'
+import { Answers, askUser } from './utils/ask.js'
+import { FileList, cleanup, getExitsingConfigFiles } from './utils/cleanup.js'
 import { ESLintDefaultConfig, ESLintRC } from './utils/eslint.js'
 import { GitIgnoreFileData } from './utils/gitignore.js'
+import { JestConfigJson, JestDefaultConfig } from './utils/jest.js'
 import { npmInit, npmInstall } from './utils/npm.js'
 import { PackageJson } from './utils/package.js'
 import { TsConfigJson, TsDefaultConfig } from './utils/tsconfig.js'
-import { JestConfigJson, JestDefaultConfig } from './utils/jest.js'
 import { VsCodeConfigJson, VsCodeDefaultConfig } from './utils/vscode.js'
 
 const init = async (): Promise<void> => {
@@ -54,6 +54,7 @@ const init = async (): Promise<void> => {
     await npmInstall('@typescript-eslint/eslint-plugin', { dev: true, cwd })
     await npmInstall('@typescript-eslint/parser', { dev: true, cwd })
     await npmInstall('prettier', { dev: true, cwd })
+    await npmInstall('prettier-eslint', { dev: true, cwd })
     await npmInstall('typescript', { dev: true, cwd })
     await npmInstall('@types/node', { dev: true, cwd })
     await npmInstall('jest', { dev: true, cwd })
