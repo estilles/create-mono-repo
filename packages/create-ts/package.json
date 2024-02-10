@@ -1,6 +1,6 @@
 {
   "name": "@estilles/create-ts",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Initialize a Node/TypeScript repository",
   "main": "./dist/index.js",
   "bin": {

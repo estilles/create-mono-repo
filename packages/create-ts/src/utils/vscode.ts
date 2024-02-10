@@ -19,6 +19,10 @@ export const VsCodeDefaultConfig = {
     'editor.formatOnSave': true,
     'editor.defaultFormatter': 'esbenp.prettier-vscode',
   },
+  '[graphql]': {
+    'editor.formatOnSave': true,
+    'editor.defaultFormatter': 'esbenp.prettier-vscode',
+  },
   'editor.formatOnPaste': true,
   'editor.formatOnSave': true,
   'editor.tabSize': 2,
