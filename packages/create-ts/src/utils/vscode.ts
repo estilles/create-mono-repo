@@ -46,3 +46,20 @@ export class VsCodeConfigJson extends JSONFile<VsCodeConfig> {
     return new VsCodeConfigJson(path)
   }
 }
+
+export type ExtensionConfig = typeof ExtensionDefaultConfig
+
+export const ExtensionDefaultConfig = {
+  recommendations: [
+    'esbenp.prettier-vscode',
+    'dbaeumer.vscode-eslint',
+    'christian-kohler.npm-intellisense',
+    'rangav.vscode-thunder-client',
+  ],
+}
+
+export class ExtensionConfigJson extends JSONFile<ExtensionConfig> {
+  static create(path: string): ExtensionConfigJson {
+    return new ExtensionConfigJson(path)
+  }
+}

@@ -11,7 +11,12 @@ import { JestConfigJson, JestDefaultConfig } from './utils/jest.js'
 import { npmInit, npmInstall } from './utils/npm.js'
 import { PackageJson } from './utils/package.js'
 import { TsConfigJson, TsDefaultConfig } from './utils/tsconfig.js'
-import { VsCodeConfigJson, VsCodeDefaultConfig } from './utils/vscode.js'
+import {
+  ExtensionConfigJson,
+  ExtensionDefaultConfig,
+  VsCodeConfigJson,
+  VsCodeDefaultConfig,
+} from './utils/vscode.js'
 
 const init = async (): Promise<void> => {
   try {
@@ -115,6 +120,13 @@ const init = async (): Promise<void> => {
     )
     vscodeConfig.set(VsCodeDefaultConfig)
     await vscodeConfig.save()
+    log.succeed()
+
+    const extensionsConfig = ExtensionConfigJson.create(
+      resolve(cwd, './.vscode/extensions.json'),
+    )
+    extensionsConfig.set(ExtensionDefaultConfig)
+    await extensionsConfig.save()
     log.succeed()
 
     const srcDir: string = resolve(cwd, './src')
